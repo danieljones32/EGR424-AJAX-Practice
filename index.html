@@ -1,0 +1,56 @@
+<!-- jQuery -->
+<div id="myBtn"><a href="">Click Me</a></div>
+<div id='output'></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $("#myBtn a").click( function (e) {
+            const url = "https://jsonplaceholder.typicode.com/todos";
+            e.preventDefault();
+            $.ajax({
+                url:url,
+                type:"GET",
+                dataType:"json",
+                success: function (data) {
+                    $("#output").append("<br>Ajax call works, placeholder todos<br>");
+                    $.each(data, function (key, value) {
+                        console.log(key);
+                        console.log(value);
+                        $("#output").append(`<br>${value.title} : ${value.completed}`);
+                    })
+                }
+            })
+        })
+    })
+</script>
+
+<!-- XMLHttpRequest -->
+<script>
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            console.log('success!', xhr);
+        } else {
+            console.log('The request failed!');
+        }
+
+        console.log('This always runs...');
+    };
+
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts');
+    xhr.send();
+</script>
+
+<!-- Fetch API -->
+<script>
+    fetch('//jsonplaceholder.typicode.com/users', {
+        method:'GET'
+    }).then((response) => {
+        return response.json();
+    }).then((json) => {
+        console.log(json);
+    }).catch((err) => {
+        console.log("Error: ", err);
+    });
+</script>
